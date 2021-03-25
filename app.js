@@ -16,6 +16,7 @@ fetch('https://restcountries.eu/rest/v2/all')
             const countryInfo = `
             <h3 class='country-name'>${countryName}</h3>
             <p>${countryCapital}<p>
+            <button onclick="displayCountryDetail('${countryName}')">Show Button</button>
             `;
             countrySubDiv.innerHTML= countryInfo;
 
@@ -50,3 +51,20 @@ fetch('https://restcountries.eu/rest/v2/all')
         // }
     }
 
+    const displayCountryDetail = name => {
+         const url = `https://restcountries.eu/rest/v2/name/${name}`
+         fetch(url)
+         .then(res=>res.json()) 
+         .then(data => renderCountryInfo(data[0]));
+        
+    }
+    const renderCountryInfo = country => {
+        
+        const countryFinalDiv = document.getElementById('countryDetail');
+        countryFinalDiv.innerHTML =`
+             <h1>${country.name}</h1>
+             <p>Population : ${country.population}</p>
+             <p>Area : ${country.area}</p>
+             <img src="${country.flag}">
+        `
+    }
